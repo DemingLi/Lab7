@@ -33,11 +33,12 @@ public class FileEdit extends AppCompatActivity {
     load = (Button) findViewById(R.id.load_button);
     clear = (Button) findViewById(R.id.clear_button);
     delete = (Button) findViewById(R.id.delete_button);
-    file_name_all = file_name.getText().toString()+".txt";
+    
     
     save.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        file_name_all = file_name.getText().toString()+".txt";
         try(FileOutputStream fileOutputStream = openFileOutput(file_name_all, MODE_PRIVATE)) {
           String content = file_content.getText().toString();
           fileOutputStream.write(content.getBytes());
@@ -54,6 +55,7 @@ public class FileEdit extends AppCompatActivity {
     load.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        file_name_all = file_name.getText().toString()+".txt";
         try(FileInputStream fileInputStream = openFileInput(file_name_all)) {
           byte[] contents = new byte[fileInputStream.available()];
           int read_result = fileInputStream.read(contents);
@@ -80,6 +82,7 @@ public class FileEdit extends AppCompatActivity {
     delete.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        file_name_all = file_name.getText().toString()+".txt";
         File dir = getFilesDir();
         File file = new File(dir, file_name_all);
         boolean deleted = file.delete();
