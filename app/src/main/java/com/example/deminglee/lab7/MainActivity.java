@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import static android.view.View.GONE;
 
 public class MainActivity extends AppCompatActivity {
+  private SharedPreferences sharedPreferences;
+  private SharedPreferences.Editor editor;
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +26,10 @@ public class MainActivity extends AppCompatActivity {
     Button ok_password = (Button) findViewById(R.id.ok_password);
     Button clear_password = (Button) findViewById(R.id.clear_password);
     
-    final SharedPreferences sharedPreferences = getSharedPreferences("KEY", MODE_PRIVATE);
+    sharedPreferences = getSharedPreferences("KEY", MODE_PRIVATE);
     final String key = sharedPreferences.getString("KEY_SCORE", "n");
     
-    if (key.equals("n")) {
+    if (key.equals("n")) {//初始状态
       ok_password.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Password mismatch", Toast.LENGTH_SHORT).show();
           }//password is not match
           else {
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor = sharedPreferences.edit();
             editor.putString("KEY_SCORE", new_password.getText().toString());
             editor.apply();
             Intent intent = new Intent(MainActivity.this, FileEdit.class);
@@ -52,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
           confirm_password.setText("");
         }
       });
-    } else {
+    } else {//再次进入
       confirm_password.setVisibility(GONE);
       new_password.setHint("Password");
       ok_password.setOnClickListener(new View.OnClickListener() {

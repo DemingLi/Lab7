@@ -40,6 +40,9 @@ public class FileEdit extends AppCompatActivity {
       public void onClick(View view) {
         file_name_all = file_name.getText().toString()+".txt";
         try(FileOutputStream fileOutputStream = openFileOutput(file_name_all, MODE_PRIVATE)) {
+          if (file_name.getText().toString().equals("")) {
+            Toast.makeText(FileEdit.this, "Fail to save file", Toast.LENGTH_SHORT).show();
+          }
           String content = file_content.getText().toString();
           fileOutputStream.write(content.getBytes());
           fileOutputStream.close();
